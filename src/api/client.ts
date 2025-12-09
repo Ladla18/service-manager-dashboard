@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+import { getApiUrl } from '../utils/apiConfig';
 
 interface QueuedRequest {
   resolve: (value: string | null | PromiseLike<string | null>) => void;
@@ -24,13 +23,18 @@ const processQueue = (error: AxiosError | null, token: string | null = null) => 
 };
 
 export const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: getApiUrl(),
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
   withCredentials: true,
 });
+
+// Function to update API base URL dynamically
+export function updateApiBaseUrl(newUrl: string): void {
+  api.defaults.baseURL = newUrl;
+}
 
 // Request interceptor: Inject access token
 api.interceptors.request.use(
