@@ -10,15 +10,8 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '100vh',
-        }}
-      >
-        <div className="spinner" style={{ width: '40px', height: '40px' }}></div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
